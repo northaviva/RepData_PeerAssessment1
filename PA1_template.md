@@ -117,57 +117,12 @@ new_dat_weekday = subset(new_dat, new_dat$isweekday == TRUE)
 new_dat_weekend = subset(new_dat, new_dat$isweekday == FALSE)
 r2 <- ddply(new_dat_weekday, .(Interval), summarize, mean = mean(steps, na.rm = TRUE))
 r3 <- ddply(new_dat_weekend, .(Interval), summarize, mean = mean(steps, na.rm = TRUE))
-head(r2,20)
-```
-
-```
-##    Interval       mean
-## 1         1 2.25115304
-## 2         2 0.44528302
-## 3         3 0.17316562
-## 4         4 0.19790356
-## 5         5 0.09895178
-## 6         6 1.59035639
-## 7         7 0.69266247
-## 8         8 1.13794549
-## 9         9 0.00000000
-## 10       10 1.79622642
-## 11       11 0.39580713
-## 12       12 0.01761006
-## 13       13 0.42054507
-## 14       14 0.09056604
-## 15       15 0.19790356
-## 16       16 0.44528302
-## 17       17 0.00000000
-## 18       18 1.45953878
-## 19       19 2.22180294
-## 20       20 0.02264151
-```
-
-```r
+# head(r2,20)
 r2 <- transform(r2, Interval = dat[r2$Interval, "interval"], isweekday = "weekday")
 r3 <- transform(r3, Interval = dat[r3$Interval, "interval"], isweekday = "weekend")
 total <- rbind(r2,r3)
-head(total)
-```
-
-```
-##   Interval       mean isweekday
-## 1        0 2.25115304   weekday
-## 2        5 0.44528302   weekday
-## 3       10 0.17316562   weekday
-## 4       15 0.19790356   weekday
-## 5       20 0.09895178   weekday
-## 6       25 1.59035639   weekday
-```
-
-```r
-qplot(Interval, mean, data = total, facets = isweekday ~ ., geom = "line")
-```
-
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
-
-```r
+# head(total)
+# qplot(Interval, mean, data = total, facets = isweekday ~ ., geom = "line")
 g <- ggplot(total, aes(Interval, mean))
 g <- g + geom_line(colour = "dodgerblue1") + facet_wrap(~isweekday, nrow = 2) + labs(x = "Interval") + labs(y = "Number of steps")
  g <- g + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
@@ -176,4 +131,4 @@ g <- g + theme(strip.background = element_rect(fill = "bisque1"))
 g
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-2.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
